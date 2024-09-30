@@ -27,7 +27,7 @@ export default function TaskContainer() {
     const [responseMessage, setResponseMessage] = useState<string>("");
     const [loadingState, setLoadingState] = useState<boolean>(false);
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => { setOpen(true); setResponseMessage(""); };
     const handleClose = () => setOpen(false);
 
     useEffect(() => {
@@ -40,8 +40,7 @@ export default function TaskContainer() {
     const {
         register,
         handleSubmit,
-        reset,
-        setValue
+        reset
     } = useForm<FormInputs>();
 
     const style = {
@@ -187,20 +186,14 @@ export default function TaskContainer() {
             setSubmitState("Success");
             reset();
 
-            sleep(2000);
+            setLoadingState(false);
+            await sleep(3000);
             setOpen(false);
         } catch (e) {
             console.log(e);
             setResponseMessage("Something went wrong. Please try again.");
             setSubmitState("Error");
-        }
-
-        setLoadingState(false);
-
-        try {
-
-        } catch (e) {
-            
+            setLoadingState(false);
         }
     };
 
@@ -213,10 +206,10 @@ export default function TaskContainer() {
             return "negative-response";
         }
 
-        return "";
+        return "neutral-response";
     }
 
-    function sleep(ms) {
+    function sleep(ms: number) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
