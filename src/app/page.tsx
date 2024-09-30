@@ -1,6 +1,8 @@
-import { TaskContainer } from "@/components/task-container";
+import LoadingContainer from "@/components/loading-container";
+import TaskContainer from "@/components/task-container";
+import { Suspense } from "react";
 
-export default async function Home() {
+export default function Home() {
 
   return (
     <>
@@ -9,7 +11,9 @@ export default async function Home() {
       </nav>
       <main className="flex flex-row mt-8">
 
-        <TaskContainer />
+        <Suspense fallback={<LoadingContainer />}>
+          <TaskContainer />
+        </Suspense>
 
       </main>
     </>

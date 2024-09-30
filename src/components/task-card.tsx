@@ -1,7 +1,6 @@
 "use client";
 
 import { TaskType } from "@/app/lib/type-library";
-import { Button } from "@mui/material";
 import axios from "axios";
 
 type offsetType = {
@@ -9,7 +8,7 @@ type offsetType = {
     modifier: string
 }
 
-export async function TaskCard(task: TaskType) {
+export default function TaskCard(task: TaskType) {
 
     const {
         TaskId,
@@ -17,7 +16,7 @@ export async function TaskCard(task: TaskType) {
         LastDate,
         Threshold1,
         Threshold2
-    } = task;
+    } = task;  
 
     const dateTimeOffset: offsetType = calculateDateOffset();
     const colorScheme: string = calculateColorScheme();
@@ -99,10 +98,10 @@ export async function TaskCard(task: TaskType) {
             <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis">{DisplayName}</span>
 
             <div className="m-6">
-                <Button className="flex flex-col w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>
+                <button className="grid place-items-center content-center w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>
                     <span className="text-5xl sm:text-3xl lg:text-5xl mb-2">{dateTimeOffset.value}</span>
                     <span className="text-2xl">{dateTimeOffset.modifier}</span>
-                </Button>
+                </button>
             </div>
 
             <span className="font-extralight italic text-base">Last Date: {new Date(LastDate).toLocaleDateString() + " " + new Date(LastDate).toLocaleTimeString()}</span>
