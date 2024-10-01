@@ -156,7 +156,13 @@ export default function TaskContainer() {
                         <div className="grow">
                             <span className={`font-bold text-md  ${GetResponseCssClass()}`}>{responseMessage}</span>
                         </div>
-                        <button className="bg-red-500 hover:bg-red-600 font-semibold px-4 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-red-700 rounded-lg border border-slate-700 shadow shadow-gray-700">Reset</button>
+
+                        <button type="reset" onClick={() => onReset()} className="bg-red-500 hover:bg-red-600 font-semibold px-4 py-2 mr-2 focus:outline-none focus:ring-2 focus:ring-red-700 rounded-lg border border-slate-700 shadow shadow-gray-700" disabled={loadingState}>
+                            <span className="flex items-center">
+                                Reset
+                            </span>
+                        </button>
+
                         <button type="submit" className="bg-green-700 hover:bg-green-800 font-semibold px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-900 rounded-lg border border-slate-700 shadow shadow-gray-700" disabled={loadingState}>
                             <span className="flex items-center">
                                 {loadingState ? <>Submit&nbsp;<CircularProgress size={16} sx={{ color: "white" }} /></> : <>Submit&nbsp;<SendIcon className="text-lg flex items-center" /></>}
@@ -195,6 +201,10 @@ export default function TaskContainer() {
             setSubmitState("Error");
             setLoadingState(false);
         }
+    };
+
+    const onReset = async () => {
+        reset();
     };
 
     function GetResponseCssClass() {

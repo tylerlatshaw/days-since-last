@@ -69,9 +69,12 @@ export async function POST(request: Request) {
       Body: csv
     });
 
-    const response = client.send(putCommand);
+    await client.send(putCommand);
 
-    return NextResponse.json(response);
+    return NextResponse.json({
+      status: "Ok",
+      message: DisplayName + " successfully updated!",
+    });
 
   } catch (error) {
     console.error("Error fetching data from S3: ", error);

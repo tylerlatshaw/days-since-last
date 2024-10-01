@@ -81,7 +81,7 @@ export default function TaskCard(task: TaskType) {
     const onSubmit = async () => {
 
         try {
-            await axios.post("/api/update-tasks", {
+            await axios.post("/api/update-task", {
                 TaskId: TaskId,
                 DisplayName: DisplayName,
                 LastDate: new Date,

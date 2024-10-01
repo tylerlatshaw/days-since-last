@@ -4,6 +4,7 @@ import { TaskType } from "@/app/lib/type-library";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Link from "next/link";
 
 export default function EditTable() {
 
@@ -23,42 +24,46 @@ export default function EditTable() {
         const tdStyle = "px-4 py-3 border border-gray-900";
 
         const formContent = tasks.map((task) => {
-            return <tr key={task.TaskId}>
-                <td className={tdStyle}>{task.TaskId}</td>
-                <td className={tdStyle + " font-semibold"}>{task.DisplayName}</td>
-                <td className={tdStyle}>{task.LastDate.toLocaleString()}</td>
-                <td className={tdStyle}>{task.Threshold1} Days</td>
-                <td className={tdStyle}>{task.Threshold2} Days</td>
-                <td className={tdStyle}>
-                    <div className="flex flex-row">
-                        <button className="flex flex-row items-center">
-                            <span className="underline cursor-pointer">Delete</span>
-                        </button>
-                        <span className="mx-2">|</span>
-                        <button>
-                            <span className="underline cursor-pointer">Edit</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>;
+            return <>
+                <tr>
+                    <td className={tdStyle}>{task.TaskId}</td>
+                    <td className={tdStyle + " font-semibold"}>{task.DisplayName}</td>
+                    <td className={tdStyle}>{task.LastDate.toLocaleString()}</td>
+                    <td className={tdStyle}>{task.Threshold1} Days</td>
+                    <td className={tdStyle}>{task.Threshold2} Days</td>
+                    <td className={tdStyle}>
+                        <div className="flex flex-row">
+                            <button>
+                                <span className="underline cursor-pointer">Delete</span>
+                            </button>
+                            <span className="mx-2">|</span>
+                            <Link href={"/edit-tasks/" + task.TaskId}>
+                                <button>
+                                    <span className="underline cursor-pointer">Edit</span>
+                                </button>
+                            </Link>
+                        </div>
+                    </td>
+                </tr>
+            </>;
         });
 
         return <>
-            <table className="">
+            <table className="w-full">
                 <thead className="bg-slate-800">
                     <tr>
                         <th className={thStyle}>Task ID</th>
                         <th className={thStyle}>Task Name</th>
                         <th className={thStyle}>Last Date</th>
                         <th className={thStyle}>
-                            <div className="flex flex-row items-center w-full h-6">
+                            <div className="flex flex-row items-center justify-center w-full h-6">
                                 <div className="self-center h-full aspect-square bg-green-700 border border-gray-800 shadow-lg shadow-gray-700 rounded-full"></div>
                                 <ArrowForwardIcon className="mx-1" />
                                 <div className="self-center h-full aspect-square bg-yellow-600 border border-gray-800 shadow-lg shadow-gray-700 rounded-full"></div>
                             </div>
                         </th>
                         <th className={thStyle}>
-                            <div className="flex flex-row items-center w-full h-6">
+                            <div className="flex flex-row items-center justify-center w-full h-6">
                                 <div className="self-center h-full aspect-square bg-yellow-600 border border-gray-800 shadow-lg shadow-gray-700 rounded-full"></div>
                                 <ArrowForwardIcon className="mx-1" />
                                 <div className="self-center h-full aspect-square bg-red-500 border border-gray-800 shadow-lg shadow-gray-700 rounded-full"></div>
@@ -80,7 +85,7 @@ export default function EditTable() {
     }
 
     return <>
-        <div className="">
+        <div className="w-full">
 
             {loading ? getLoadingTable() : getDataTable()}
 
