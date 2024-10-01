@@ -33,7 +33,7 @@ export default function EditTable() {
                     <td className={tdStyle}>{task.Threshold2} Days</td>
                     <td className={tdStyle}>
                         <div className="flex flex-row">
-                            <button>
+                            <button onClick={() => onDelete(task.TaskId)}>
                                 <span className="underline cursor-pointer">Delete</span>
                             </button>
                             <span className="mx-2">|</span>
@@ -83,6 +83,14 @@ export default function EditTable() {
 
         return null;
     }
+
+    const onDelete = async (TaskId: string) => {
+        try {
+            await axios.post("/api/delete-task", {TaskId});
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return <>
         <div className="w-full">
