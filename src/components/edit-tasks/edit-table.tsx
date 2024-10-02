@@ -25,21 +25,21 @@ export default function EditTable() {
 
         const formContent = tasks.map((task) => {
             return <>
-                <tr>
+                <tr key={task.TaskId}>
                     <td className={tdStyle}>{task.TaskId}</td>
                     <td className={tdStyle + " font-semibold"}>{task.DisplayName}</td>
-                    <td className={tdStyle}>{task.LastDate.toLocaleString()}</td>
-                    <td className={tdStyle}>{task.Threshold1} Days</td>
-                    <td className={tdStyle}>{task.Threshold2} Days</td>
+                    <td className={tdStyle}>{new Date(task.LastDate).toLocaleDateString() + " " + new Date(task.LastDate).toLocaleTimeString()}</td>
+                    <td className={tdStyle + " text-center"}>{task.Threshold1} Days</td>
+                    <td className={tdStyle + " text-center"}>{task.Threshold2} Days</td>
                     <td className={tdStyle}>
-                        <div className="flex flex-row">
+                        <div className="flex flex-row justify-center">
                             <button onClick={() => onDelete(task.TaskId)}>
-                                <span className="underline cursor-pointer">Delete</span>
+                                <span className="underline cursor-pointer font-semibold">Delete</span>
                             </button>
                             <span className="mx-2">|</span>
                             <Link href={"/edit-tasks/" + task.TaskId}>
                                 <button>
-                                    <span className="underline cursor-pointer">Edit</span>
+                                    <span className="underline cursor-pointer font-semibold">Edit</span>
                                 </button>
                             </Link>
                         </div>
@@ -49,10 +49,10 @@ export default function EditTable() {
         });
 
         return <>
-            <table className="w-full">
+            <table className="w-full text-nowrap overflow-x-auto">
                 <thead className="bg-slate-800">
                     <tr>
-                        <th className={thStyle}>Task ID</th>
+                        <th className={thStyle + " w-96"}>Task ID</th>
                         <th className={thStyle}>Task Name</th>
                         <th className={thStyle}>Last Date</th>
                         <th className={thStyle}>
@@ -80,20 +80,57 @@ export default function EditTable() {
     }
 
     function getLoadingTable() {
+        const rows = [1, 2, 3, 4, 5, 6];
+        const thStyle = "px-4 py-4 border border-gray-900";
+        const tdStyle = "px-4 py-4 border border-gray-900";
 
-        return null;
+        const formContent = rows.map((row) => {
+            return <tr key={row}>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-84 bg-slate-400"></div></td>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-48 bg-slate-400"></div></td>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-44 bg-slate-400"></div></td>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-16 bg-slate-400 mx-auto"></div></td>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-20 bg-slate-400 mx-auto"></div></td>
+                <td className={tdStyle}><div className="animate-pulse rounded h-4 w-28 bg-slate-400 mx-auto"></div></td>
+            </tr>;
+        });
+
+        return <>
+            <table className="w-full text-nowrap overflow-x-auto">
+                <thead className="bg-slate-800">
+                    <tr>
+                        <th className={thStyle + " w-96"}><div className="animate-pulse rounded h-4 w-16 mx-auto bg-slate-400"></div></th>
+                        <th className={thStyle}><div className="animate-pulse rounded h-4 w-24 mx-auto bg-slate-400"></div></th>
+                        <th className={thStyle}><div className="animate-pulse rounded h-4 w-20 mx-auto bg-slate-400"></div></th>
+                        <th className={thStyle}><div className="animate-pulse rounded h-4 w-20 mx-auto bg-slate-400"></div></th>
+                        <th className={thStyle}><div className="animate-pulse rounded h-4 w-20 mx-auto bg-slate-400"></div></th>
+                        <th className={thStyle}><div className="animate-pulse rounded h-4 w-16 mx-auto bg-slate-400"></div></th>
+                    </tr>
+                </thead>
+                <tbody className="bg-slate-700">
+                    {formContent}
+                </tbody>
+            </table>
+        </>;
     }
 
     const onDelete = async (TaskId: string) => {
         try {
-            await axios.post("/api/delete-task", {TaskId});
+            await axios.post("/api/delete-task", { TaskId });
+            setLoading(true);
+
+            // Refetch the tasks
+            await axios.get("/api/get-tasks").then((response) => {
+                console.log(response);
+                setTasks(response.data);
+            }).then(() => setLoading(false));
         } catch (e) {
             console.log(e);
         }
     };
 
     return <>
-        <div className="w-full">
+        <div className="w-full text-nowrap overflow-x-auto">
 
             {loading ? getLoadingTable() : getDataTable()}
 

@@ -191,10 +191,16 @@ export default function TaskContainer() {
             setResponseMessage(data.message);
             setSubmitState("Success");
             reset();
-
-            setLoadingState(false);
             await sleep(3000);
+            setLoadingState(false);
             setOpen(false);
+
+            setLoading(true);
+            await axios.get("/api/get-tasks").then((response) => {
+                console.log(response);
+                setTasks(response.data);
+            }).then(() => setLoading(false));
+            setLoading(false);
         } catch (e) {
             console.log(e);
             setResponseMessage("Something went wrong. Please try again.");

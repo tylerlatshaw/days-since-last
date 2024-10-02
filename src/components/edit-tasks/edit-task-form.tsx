@@ -7,6 +7,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 type SubmitState = "Idle" | "Success" | "Error";
 type FormInputs = {
@@ -18,6 +19,8 @@ type FormInputs = {
 };
 
 export default function EditTaskForm(currentTask: TaskType) {
+
+    const router = useRouter();
 
     const [submitState, setSubmitState] = useState<SubmitState>("Idle");
     const [responseMessage, setResponseMessage] = useState<string>("");
@@ -31,7 +34,6 @@ export default function EditTaskForm(currentTask: TaskType) {
         setValue("Threshold2", currentTask.Threshold2);
     });
 
-
     const {
         register,
         handleSubmit,
@@ -40,17 +42,17 @@ export default function EditTaskForm(currentTask: TaskType) {
     } = useForm<FormInputs>();
 
     const style = {
-        width: "40%",
+        width: "100%",
         bgcolor: "#475569", //slate-600
         border: "2px solid #111827", //gray-900
         boxShadow: 24,
         borderRadius: 4
     };
 
-    const labelStyle = "mb-2 font-semibold";
-    const inputStyle = "w-full rounded border border-slate-800 bg-slate-700 disabled:bg-slate-500 hover:bg-slate-800 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-green-700 focus:border-green-700 px-3 py-2";
+    function getFormContents() {
+        const labelStyle = "mb-2 font-semibold";
+        const inputStyle = "w-full rounded border border-slate-800 bg-slate-700 disabled:bg-slate-500 hover:bg-slate-800 focus:bg-slate-800 focus:outline-none focus:ring-1 focus:ring-green-700 focus:border-green-700 px-3 py-2";
 
-    function getModalContents() {
         return <Box sx={style}>
 
             <form method="POST" onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +140,8 @@ export default function EditTaskForm(currentTask: TaskType) {
             setResponseMessage(data.message);
             setSubmitState("Success");
             reset();
-
+            await sleep(3000);
+            router.push("/edit-tasks");
             setLoadingState(false);
         } catch (e) {
             console.log(e);
@@ -152,6 +155,10 @@ export default function EditTaskForm(currentTask: TaskType) {
         reset();
         setResponseMessage("");
     };
+
+    function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     function GetResponseCssClass() {
         if (submitState === "Success") {
@@ -168,7 +175,7 @@ export default function EditTaskForm(currentTask: TaskType) {
     return <>
         <div className="flex flex-wrap flex-row justify-center w-full">
 
-            {getModalContents()}
+            {getFormContents()}
 
         </div>
     </>;

@@ -2,6 +2,7 @@
 
 import { TaskType } from "@/app/lib/type-library";
 import axios from "axios";
+import { useState } from "react";
 
 type offsetType = {
     value: number
@@ -10,34 +11,15 @@ type offsetType = {
 
 export default function TaskCard(task: TaskType) {
 
-    const {
-        TaskId,
-        DisplayName,
-        LastDate,
-        Threshold1,
-        Threshold2
-    } = task;  
+    const [currentTask, setCurrentTask] = useState<TaskType>(task);
+    const [dateTimeOffset, setDateTimeOffset] = useState<offsetType>(calculateDateOffset());
 
-    const dateTimeOffset: offsetType = calculateDateOffset();
     const colorScheme: string = calculateColorScheme();
-
-    function calculateColorScheme() {
-
-        if (dateTimeOffset.modifier === "Days") {
-            if (dateTimeOffset.value >= Threshold2) {
-                return " bg-red-500";
-            } else if (dateTimeOffset.value >= Threshold1 && dateTimeOffset.value <= Threshold2) {
-                return " bg-yellow-600";
-            }
-        }
-
-        return " bg-green-700";
-    }
 
     function calculateDateOffset() {
         let modifier;
         const currentDate: Date = new Date();
-        const previousDate: Date = new Date(LastDate);
+        const previousDate: Date = new Date(currentTask.LastDate);
 
         // Time Difference in Milliseconds
         const milliDiff: number = currentDate.getTime() - previousDate.getTime();
@@ -78,16 +60,40 @@ export default function TaskCard(task: TaskType) {
         }
     }
 
+    function calculateColorScheme() {
+
+        if (dateTimeOffset?.modifier === "Days") {
+            if (dateTimeOffset?.value >= currentTask.Threshold2) {
+                return " bg-red-500";
+            } else if (dateTimeOffset?.value >= currentTask.Threshold1 && dateTimeOffset?.value <= currentTask.Threshold2) {
+                return " bg-yellow-600";
+            }
+        }
+
+        return " bg-green-700";
+    }
+
     const onSubmit = async () => {
 
         try {
             await axios.post("/api/update-task", {
-                TaskId: TaskId,
-                DisplayName: DisplayName,
+                TaskId: currentTask.TaskId,
+                DisplayName: currentTask.DisplayName,
                 LastDate: new Date,
-                Threshold1: Threshold1,
-                Threshold2: Threshold2
+                Threshold1: currentTask.Threshold1,
+                Threshold2: currentTask.Threshold2
             } as TaskType);
+
+            const updatedTasks: TaskType[] = await axios.get("/api/get-tasks").then((response) => {
+                return response.data;
+            });
+
+            const updatedTask: TaskType = updatedTasks.find((taskIndex) => {
+                return taskIndex.TaskId === currentTask.TaskId;
+            })!;
+
+            setCurrentTask(updatedTask);
+            setDateTimeOffset(calculateDateOffset());
         } catch (e) {
             console.log(e);
         }
@@ -95,16 +101,16 @@ export default function TaskCard(task: TaskType) {
 
     return <div className="w-full sm:w-1/2 md:w-1/4 xl:w-1/5 p-2 text-center">
         <div className={"m-2 p-3 rounded-lg border border-gray-800 shadow-xl shadow-gray-700 " + colorScheme}>
-            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis">{DisplayName}</span>
+            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis">{currentTask.DisplayName}</span>
 
             <div className="m-6">
                 <button className="grid place-items-center content-center w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>
-                    <span className="text-5xl sm:text-3xl lg:text-5xl mb-2">{dateTimeOffset.value}</span>
-                    <span className="text-2xl">{dateTimeOffset.modifier}</span>
+                    <span className="text-5xl sm:text-3xl lg:text-5xl mb-2">{calculateDateOffset().value}</span>
+                    <span className="text-2xl">{calculateDateOffset().modifier}</span>
                 </button>
             </div>
 
-            <span className="font-extralight italic text-base">Last Date: {new Date(LastDate).toLocaleDateString() + " " + new Date(LastDate).toLocaleTimeString()}</span>
+            <span className="font-extralight italic text-base">Last Date: {new Date(currentTask.LastDate).toLocaleDateString() + " " + new Date(currentTask.LastDate).toLocaleTimeString()}</span>
         </div>
     </div>;
 }
