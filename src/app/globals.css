@@ -304,3 +304,34 @@
   --value-max: max-content;
   --value-fit: fit-content;
 }
+
+
+/*******************************/
+/*****
+/*****    SITEWIDE STYLES 
+/*****
+/*******************************/
+
+.positive-response {
+  color: var(--green-400);
+}
+
+.negative-response {
+  color: var(--red-300);
+}
+
+.neutral-response {
+  color: var(--gray-200);
+}
+
+.bg-positive-response {
+  background-color: var(--green-400);
+}
+
+.bg-negative-response {
+  background-color: var(--red-300);
+}
+
+.bg-neutral-response {
+  background-color: var(--gray-200);
+}

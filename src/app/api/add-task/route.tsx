@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     Threshold2
   } = await request.json() as TaskType;
 
-  const data = {
+  const newTask = {
     TaskId,
     DisplayName,
     LastDate,
@@ -53,12 +53,8 @@ export async function POST(request: Request) {
     // Remove outer array
     const zeroIndex = dataset[0] as unknown as TaskType[];
 
-    // Update row in dataset
-    const updatedData = zeroIndex.map((row) => {
-      if (row.TaskId === data.TaskId)
-        return data;
-      return row;
-    });
+    // Append new data to existing data
+    const updatedData = [...zeroIndex, newTask];
 
     // Put new file
     const csv = json2csv(updatedData);
@@ -69,12 +65,18 @@ export async function POST(request: Request) {
       Body: csv
     });
 
-    const response = client.send(putCommand);
+    await client.send(putCommand);
 
-    return NextResponse.json(response);
+    return NextResponse.json({
+      status: "Ok",
+      message: DisplayName + " successfully added!",
+    });
 
   } catch (error) {
     console.error("Error fetching data from S3: ", error);
-    return new NextResponse("Error fetching data from S3");
+    return NextResponse.json({
+      status: "Error",
+      message: "An error occurred. Please try again.",
+    });
   }
 }

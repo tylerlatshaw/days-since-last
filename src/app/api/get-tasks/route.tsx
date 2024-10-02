@@ -23,13 +23,16 @@ export async function GET() {
         });
 
         const sendResponse = await client.send(getCommand);
-        await sendResponse.Body?.transformToString()
-            .then(responseText => {
-                const data = Papa.parse(responseText, {
-                    header: true
-                });
-                dataset.push(data.data as unknown as TaskType);
-            });
+
+        await Promise.all([
+            sendResponse.Body?.transformToString()
+                .then((responseText: string) => {
+                    const data = Papa.parse(responseText, {
+                        header: true
+                    });
+                    dataset.push(data.data as unknown as TaskType);
+                })
+        ]);
 
         // Remove outer array
         const zeroIndex = dataset[0] as unknown as TaskType[];
