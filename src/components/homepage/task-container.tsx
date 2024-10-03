@@ -190,7 +190,6 @@ export default function TaskContainer() {
 
             setResponseMessage(data.message);
             setSubmitState("Success");
-            reset();
             await sleep(3000);
             setLoadingState(false);
             setOpen(false);
