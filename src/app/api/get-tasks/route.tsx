@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import Papa from "papaparse";
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 
 export const dynamic = "force-dynamic";
 

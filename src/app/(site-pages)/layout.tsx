@@ -1,5 +1,8 @@
-import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import "./../globals.css";
+import Navigation from "@/components/global/navigation";
+import Footer from "@/components/global/footer";
 
 export default function RootLayout({
   children,
@@ -7,31 +10,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const copyright = <>
-    <div className="w-full pt-6 text-md fade-in text-gray-500">
-      <div className="text-center" id="copyright">
-        &copy; {new Date().getFullYear()} Tyler J. Latshaw. All rights reserved.
-      </div>
-    </div>
-  </>;
-
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+        layout: {
+          logoImageUrl: "/static/logo-wide.svg",
+          privacyPageUrl: "https://tylerlatshaw.com/privacy-policy",
+          socialButtonsVariant: "blockButton"
+        },
+        variables: {
+          colorBackground: "#083344", // cyan-950
+          spacingUnit: "1.5rem",
+          fontSize: "1rem"
+        }
+      }}
+    >
       <html lang="en">
         <body className="bg-slate-800 text-white p-6">
-          <header>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          <main>{children}</main>
-          <footer>{copyright}</footer>
+
+          <Navigation />
+
+          <main>
+            <div className="flex flex-row mt-8">
+              <div className="flex flex-wrap flex-row justify-center bg-slate-600 w-full p-8 rounded-lg border-2 border-gray-900 shadow-lg">
+                {children}
+              </div>
+            </div>
+          </main>
+
+          <Footer />
+
         </body>
       </html>
     </ClerkProvider>
-
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import axios from "axios";
 import { useState } from "react";
 

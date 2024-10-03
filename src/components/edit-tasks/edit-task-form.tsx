@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress } from "@mui/material";

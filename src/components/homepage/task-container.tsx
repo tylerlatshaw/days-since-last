@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import TaskCard from "./task-card";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -229,14 +229,10 @@ export default function TaskContainer() {
     }
 
     return <>
-        <div className="flex flex-wrap flex-row justify-center bg-slate-600 w-full p-8 rounded-lg border-2 border-gray-900 shadow-lg">
+        {loading ? loadingCard() : generateCards()}
 
-            {loading ? loadingCard() : generateCards()}
+        {open ? getModalContents() : null}
 
-            {open ? getModalContents() : null}
-
-            {blankCard()}
-
-        </div>
+        {blankCard()}
     </>;
 }
