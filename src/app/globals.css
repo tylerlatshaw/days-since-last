@@ -312,6 +312,19 @@
 /*****
 /*******************************/
 
+.cl-userButtonTrigger, .cl-userPreviewAvatarBox {
+  border: solid 2px white;
+  background-color: white;
+  filter: drop-shadow(0 4px 3px rgba(190, 190, 190, 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+  width: var(--value-10);
+  height: var(--value-10);
+}
+
+.cl-avatarBox {
+  width: var(--value-9);
+  height: var(--value-9);
+}
+
 .cl-userProfile-root  {
   width: 100%;
 }

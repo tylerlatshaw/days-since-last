@@ -1,9 +1,9 @@
-import EditTable from "@/components/edit-tasks/edit-table";
+import AddTask from "@/components/add-tasks/add-task";
 import RestrictedPage from "@/components/global/restricted-page";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Edit Task",
+    title: "Add Task",
 };
 
 export default function Page() {
@@ -11,8 +11,8 @@ export default function Page() {
     return (
         <>
             <RestrictedPage />
-
-            <EditTable />
+            
+            <AddTask />
         </>
     );
 }

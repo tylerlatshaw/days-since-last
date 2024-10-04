@@ -8,6 +8,11 @@ export type FooterLinkType = {
     icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>
 }
 
+export type NavigationLinkType = {
+    display: string,
+    link: string
+}
+
 export type TaskType = {
     TaskId: string,
     DisplayName: string,

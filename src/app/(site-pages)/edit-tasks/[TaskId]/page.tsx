@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import EditTaskForm from "@/components/edit-tasks/edit-task-form";
 import EditLoadingForm from "@/components/edit-tasks/edit-loading-form";
 import TaskNotFound from "@/components/edit-tasks/task-not-found";
+import RestrictedPage from "@/components/global/restricted-page";
 
 export default function Page({ params }: { params: { TaskId: string } }) {
 
@@ -26,6 +27,8 @@ export default function Page({ params }: { params: { TaskId: string } }) {
     });
 
     return <>
+        <RestrictedPage />
+        
         <div className="w-2/5">
             {
                 loading ?

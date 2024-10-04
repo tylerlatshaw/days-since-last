@@ -3,6 +3,14 @@ import { dark } from "@clerk/themes";
 import "./../globals.css";
 import Navigation from "@/components/global/navigation";
 import Footer from "@/components/global/footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Days Since Last",
+    default: "Days Since Last",
+  }
+};
 
 export default function RootLayout({
   children,
@@ -27,6 +35,10 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
+        <head>
+          <link rel="icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        </head>
         <body className="bg-slate-800 text-white p-6">
 
           <Navigation />

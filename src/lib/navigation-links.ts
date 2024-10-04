@@ -5,6 +5,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 import type {
     FooterLinkType,
+    NavigationLinkType
 } from "./type-library";
 
 export const footerLinks: FooterLinkType[] = [
@@ -28,4 +29,15 @@ export const footerLinks: FooterLinkType[] = [
         link: "https://github.com/tylerlatshaw",
         icon: GitHubIcon
     }
+];
+
+export const signedInLinks: NavigationLinkType[] = [
+    {
+        display: "Edit Tasks",
+        link: "/edit-tasks"
+    },
+    {
+        display: "User Profile",
+        link: "/user-profile"
+    },
 ];
