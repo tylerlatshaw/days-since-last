@@ -16,7 +16,7 @@ export default function RootLayout({
         baseTheme: dark,
         layout: {
           logoImageUrl: "/static/logo-wide.svg",
-          privacyPageUrl: "https://tylerlatshaw.com/privacy-policy",
+          privacyPageUrl: "/privacy-policy",
           socialButtonsVariant: "blockButton"
         },
         variables: {

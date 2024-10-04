@@ -26,6 +26,7 @@
     "axios": "^1.7.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.12",
+    "hamburger-react": "^2.5.1",
     "json-2-csv": "^5.5.5",
     "next": "14.2.12",
     "papaparse": "^5.4.1",

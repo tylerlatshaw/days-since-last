@@ -7,11 +7,13 @@ export default async function Navigation() {
     return (
         <>
             <header>
-                <nav className="flex flex-row items-center w-full mx-auto text-center mt-8">
+                <nav className="flex flex-row items-center w-full mx-auto text-center mt-4 mx-2">
 
-                    <Link href="/">
-                        <Image src={"/static/logo-wide.svg"} width={418} height={60} alt={"Logo"} />
-                    </Link>
+                    <div className="cursor-pointer">
+                        <Link href="/">
+                            <Image src={"/static/logo-wide.svg"} width={418} height={60} alt={"Logo"} className="hover:drop-shadow-[0_0_12px_rgba(148,163,184,0.4)]" />
+                        </Link>
+                    </div>
 
                     {/* <div className="z-10 absolute right-8">
                     <Link href={"/edit-tasks"}>
@@ -23,7 +25,7 @@ export default async function Navigation() {
                     </Link>
                 </div> */}
 
-            {/* <SignedOut>
+                    {/* <SignedOut>
               <SignInButton />
             </SignedOut>
             <SignedIn>

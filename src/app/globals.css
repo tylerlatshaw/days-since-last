@@ -368,3 +368,82 @@
 .bg-neutral-response {
   background-color: var(--gray-200);
 }
+
+/* screen width < md */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
+
+/* screen width > md */
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+
+/*******************************/
+/*****
+/*****    AUTH PAGES 
+/*****
+/*******************************/
+
+.cl-userProfile-root  {
+  width: 100%;
+}
+
+.cl-userProfile-root .cl-cardBox  {
+  width: 100%;
+}
+
+.cl-userProfile-root .cl-navbar  {
+  min-width: 25%;
+}
+
+.cl-card {
+  padding: 3rem 2rem;
+}
+
+.cl-logoBox {
+  height: 4rem;
+}
+
+.cl-logoImage {
+  width: 100%;
+}
+
+.cl-socialButtonsBlockButton {
+  background-color: var(--cyan-900);
+  color: white;
+}
+
+.cl-socialButtonsProviderIcon {
+  filter: drop-shadow(0 4px 3px rgba(190, 190, 190, 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+
+/*******************************/
+/*****
+/*****    PRIVACY POLICY 
+/*****
+/*******************************/
+
+.privacy-policy a  {
+  text-decoration: underline;
+  color: var(--cyan-300);
+}
+
+.privacy-policy a:hover  {
+  color: var(--cyan-500);
+}
+
+.privacy-policy h2  {
+  text-align: center;
+}
+
+.privacy-policy ul {
+  list-style-type: disc;
+  margin-left: 18px;
+}

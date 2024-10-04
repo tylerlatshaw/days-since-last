@@ -94,7 +94,7 @@ export default function TaskContainer() {
         return <>
             <div className="w-full sm:w-1/2 md:w-1/4 xl:w-1/5 p-2 text-center">
                 <div className={"m-2 p-3 rounded-lg border-dashed border-4 border-gray-600 bg-gray-400 "}>
-                    <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis"></span>
+                    <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center mt-3 h-16 line-clamp-2 text-ellipsis"></span>
 
                     <div className="m-6">
                         <button className="grid place-items-center w-full h-full bg-gray-500/40 aspect-square rounded-lg border border-black text-black group hover:bg-black/30 cursor-pointer" onClick={handleOpen}>

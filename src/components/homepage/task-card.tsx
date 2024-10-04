@@ -101,7 +101,7 @@ export default function TaskCard(task: TaskType) {
 
     return <div className="w-full sm:w-1/2 md:w-1/4 xl:w-1/5 p-2 text-center">
         <div className={"m-2 p-3 rounded-lg border border-gray-800 shadow-xl shadow-gray-700 " + colorScheme}>
-            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis">{currentTask.DisplayName}</span>
+            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto mt-3 items-center h-16 line-clamp-2 text-ellipsis">{currentTask.DisplayName}</span>
 
             <div className="m-6">
                 <button className="grid place-items-center content-center w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>
