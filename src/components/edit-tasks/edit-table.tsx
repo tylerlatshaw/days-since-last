@@ -1,27 +1,37 @@
 "use client";
 
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import NoTasks from "../homepage/no-tasks";
 
 export default function EditTable() {
 
     const [tasks, setTasks] = useState<TaskType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const { user } = useUser();
+
+    const UserId = user?.id;
 
     useEffect(() => {
-        axios.get("/api/get-tasks").then((response) => {
-            console.log(response);
+        axios.post("/api/get-tasks", {
+            "UserId": UserId
+        }).then((response) => {
             setTasks(response.data);
         }).then(() => setLoading(false));
-    }, []);
+    }, [UserId]);
 
     function getDataTable() {
 
         const thStyle = "px-4 py-3 border border-gray-900";
         const tdStyle = "px-4 py-3 border border-gray-900";
+
+        if (tasks.length < 1) {
+            return <NoTasks />;
+        }
 
         const formContent = tasks.map((task) => {
             return <>
@@ -116,11 +126,13 @@ export default function EditTable() {
 
     const onDelete = async (TaskId: string) => {
         try {
-            await axios.post("/api/delete-task", { TaskId });
+            await axios.post("/api/delete-task", { UserId, TaskId });
             setLoading(true);
 
             // Refetch the tasks
-            await axios.get("/api/get-tasks").then((response) => {
+            axios.post("/api/get-tasks", {
+                "UserId": UserId
+            }).then((response) => {
                 console.log(response);
                 setTasks(response.data);
             }).then(() => setLoading(false));

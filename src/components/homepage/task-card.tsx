@@ -1,6 +1,6 @@
 "use client";
 
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import axios from "axios";
 import { useState } from "react";
 
@@ -13,8 +13,7 @@ export default function TaskCard(task: TaskType) {
 
     const [currentTask, setCurrentTask] = useState<TaskType>(task);
     const [dateTimeOffset, setDateTimeOffset] = useState<offsetType>(calculateDateOffset());
-
-    const colorScheme: string = calculateColorScheme();
+    const [colorScheme, setColorScheme] = useState<string>(calculateColorScheme());
 
     function calculateDateOffset() {
         let modifier;
@@ -77,14 +76,17 @@ export default function TaskCard(task: TaskType) {
 
         try {
             await axios.post("/api/update-task", {
+                UserId: currentTask.UserId,
                 TaskId: currentTask.TaskId,
                 DisplayName: currentTask.DisplayName,
-                LastDate: new Date,
+                LastDate: new Date().toISOString(),
                 Threshold1: currentTask.Threshold1,
                 Threshold2: currentTask.Threshold2
             } as TaskType);
 
-            const updatedTasks: TaskType[] = await axios.get("/api/get-tasks").then((response) => {
+            const updatedTasks: TaskType[] = await axios.post("/api/get-tasks", {
+                "UserId": currentTask.UserId
+            }).then((response) => {
                 return response.data;
             });
 
@@ -92,6 +94,7 @@ export default function TaskCard(task: TaskType) {
                 return taskIndex.TaskId === currentTask.TaskId;
             })!;
 
+            setColorScheme(calculateColorScheme());
             setCurrentTask(updatedTask);
             setDateTimeOffset(calculateDateOffset());
         } catch (e) {
@@ -101,7 +104,7 @@ export default function TaskCard(task: TaskType) {
 
     return <div className="w-full sm:w-1/2 md:w-1/4 xl:w-1/5 p-2 text-center">
         <div className={"m-2 p-3 rounded-lg border border-gray-800 shadow-xl shadow-gray-700 " + colorScheme}>
-            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto items-center h-16 line-clamp-2 text-ellipsis">{currentTask.DisplayName}</span>
+            <span className="flex w-full font-bold text-2xl sm:text-xl lg:text-2xl text-center justify-center mx-auto mt-3 items-center h-16 line-clamp-2 text-ellipsis">{currentTask.DisplayName}</span>
 
             <div className="m-6">
                 <button className="grid place-items-center content-center w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>

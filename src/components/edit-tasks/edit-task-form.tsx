@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { TaskType } from "@/app/lib/type-library";
+import { TaskType } from "@/lib/type-library";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress } from "@mui/material";
@@ -11,9 +11,10 @@ import { useRouter } from "next/navigation";
 
 type SubmitState = "Idle" | "Success" | "Error";
 type FormInputs = {
+    UserId: string,
     TaskId: string,
     DisplayName: string,
-    LastDate: Date,
+    LastDate: string,
     Threshold1: number,
     Threshold2: number
 };
@@ -29,7 +30,8 @@ export default function EditTaskForm(currentTask: TaskType) {
     useEffect(() => {
         setValue("DisplayName", currentTask.DisplayName);
         setValue("TaskId", currentTask.TaskId);
-        setValue("LastDate", currentTask.LastDate);
+        setValue("UserId", currentTask.UserId!);
+        setValue("LastDate", new Date(currentTask.LastDate).toISOString());
         setValue("Threshold1", currentTask.Threshold1);
         setValue("Threshold2", currentTask.Threshold2);
     });
@@ -75,7 +77,7 @@ export default function EditTaskForm(currentTask: TaskType) {
 
                     <div className="flex flex-col">
                         <label className={labelStyle}>Last Date:</label>
-                        <input {...register("LastDate")} id="LastDate" type="datedatetime-local" placeholder="2024-09-27T13:04:49.386Z" className={inputStyle} required disabled={loadingState} />
+                        <input {...register("LastDate")} id="LastDate" type="text" placeholder="2024-09-27T13:04:49.386Z" className={inputStyle} required disabled={loadingState} />
                     </div>
 
                     <div className="flex flex-col w-full">
@@ -130,9 +132,10 @@ export default function EditTaskForm(currentTask: TaskType) {
         setLoadingState(true);
         try {
             const { data } = await axios.post("/api/update-task", {
+                UserId: formData.UserId,
                 TaskId: formData.TaskId,
                 DisplayName: formData.DisplayName,
-                LastDate: formData.LastDate,
+                LastDate: new Date(formData.LastDate).toISOString(),
                 Threshold1: formData.Threshold1,
                 Threshold2: formData.Threshold2,
             } as TaskType);
