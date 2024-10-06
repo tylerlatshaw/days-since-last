@@ -1,20 +1,14 @@
 "use client";
 
 import { UserProfile } from "@clerk/nextjs";
-
-const DotIcon = () => {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
-            <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
-        </svg>
-    );
-};
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 const CustomPage = () => {
     return (
-        <div>
-            <h1>Custom Profile Page</h1>
-            <p>This is the custom profile page</p>
+        <div className="space-y-6">
+            <h1 className="text-3xl font-semibold">Feedback</h1>
+            <h2 className="text-xl font-semibold">Page Coming Soon</h2>
+            <p>Please send all feedback to Tyler Latshaw.</p>
         </div>
     );
 };
@@ -22,17 +16,8 @@ const CustomPage = () => {
 const UserProfilePage = () => (
     <>
         <UserProfile path="/user-profile" routing="path">
-            {/* You can pass the content as a component */}
-            <UserProfile.Page label="Custom Page" labelIcon={<DotIcon />} url="custom-page">
+            <UserProfile.Page label="Feedback" labelIcon={<InsertCommentIcon />} url="custom-page">
                 <CustomPage />
-            </UserProfile.Page>
-
-            {/* You can also pass the content as direct children */}
-            <UserProfile.Page label="Terms" labelIcon={<DotIcon />} url="terms">
-                <div>
-                    <h1>Custom Terms Page</h1>
-                    <p>This is the custom terms page</p>
-                </div>
             </UserProfile.Page>
         </UserProfile>
     </>

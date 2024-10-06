@@ -33,6 +33,10 @@ export const footerLinks: FooterLinkType[] = [
 
 export const signedInLinks: NavigationLinkType[] = [
     {
+        display: "Add Task",
+        link: "/add-task"
+    },
+    {
         display: "Edit Tasks",
         link: "/edit-tasks"
     },

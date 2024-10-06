@@ -14,9 +14,10 @@ export type NavigationLinkType = {
 }
 
 export type TaskType = {
+    UserId?: string,
     TaskId: string,
     DisplayName: string,
-    LastDate: Date,
+    LastDate: string,
     Threshold1: number,
     Threshold2: number
 }

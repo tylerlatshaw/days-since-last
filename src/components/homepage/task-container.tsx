@@ -4,24 +4,35 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { TaskType } from "@/lib/type-library";
 import TaskCard from "./task-card";
+import { useUser } from "@clerk/nextjs";
+import NoTasks from "./no-tasks";
 
 export default function TaskContainer() {
 
     const [tasks, setTasks] = useState<TaskType[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const { user } = useUser();
+
+    const UserId = user?.id;
 
     useEffect(() => {
-        axios.get("/api/get-tasks").then((response) => {
+        axios.post("/api/get-tasks", {
+            "UserId": UserId
+        }).then((response) => {
             console.log(response);
             setTasks(response.data);
         }).then(() => setLoading(false));
-    }, []);
+    }, [UserId]);
 
     function generateCards() {
 
+        if (tasks.length < 1) {
+            return <NoTasks />;
+        }
+
         return tasks && tasks.map((task) => {
             return <>
-                <TaskCard TaskId={task.TaskId} DisplayName={task.DisplayName} LastDate={task.LastDate} Threshold1={task.Threshold1} Threshold2={task.Threshold2} />
+                <TaskCard UserId={UserId} TaskId={task.TaskId} DisplayName={task.DisplayName} LastDate={task.LastDate} Threshold1={task.Threshold1} Threshold2={task.Threshold2} />
             </>;
         });
     }

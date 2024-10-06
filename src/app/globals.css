@@ -352,6 +352,7 @@
 .cl-socialButtonsBlockButton {
   background-color: var(--cyan-900);
   color: white;
+  padding: 0.625rem 1.125rem;
 }
 
 .cl-socialButtonsProviderIcon {
@@ -434,6 +435,11 @@
 
 .cl-socialButtonsProviderIcon {
   filter: drop-shadow(0 4px 3px rgba(190, 190, 190, 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+.cl-userButtonPopoverActionButtonIcon, .cl-navbarButtonIcon, .cl-providerIcon {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 

@@ -8,6 +8,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { Box, CircularProgress } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { useUser } from "@clerk/nextjs";
 
 type SubmitState = "Idle" | "Success" | "Error";
 type FormInputs = {
@@ -21,6 +22,7 @@ export default function AddTask() {
     const [submitState, setSubmitState] = useState<SubmitState>("Idle");
     const [responseMessage, setResponseMessage] = useState<string>("");
     const [loadingState, setLoadingState] = useState<boolean>(false);
+    const { user } = useUser();
 
     const {
         register,
@@ -45,19 +47,26 @@ export default function AddTask() {
         setLoadingState(true);
         try {
             const { data } = await axios.post("/api/add-task", {
+                UserId: user?.id,
                 TaskId: uuidv4(),
                 DisplayName: formData.DisplayName,
-                LastDate: new Date,
+                LastDate: new Date().toISOString(),
                 Threshold1: formData.Threshold1,
                 Threshold2: formData.Threshold2,
             } as TaskType);
 
-            reset();
-            setResponseMessage(data.message);
-            setSubmitState("Success");
-            await sleep(3000);
-            setLoadingState(false);
-
+            if (data.status === "Error") {
+                setResponseMessage(data.message);
+                setSubmitState("Error");
+                await sleep(3000);
+                setLoadingState(false);
+            } else {
+                reset();
+                setResponseMessage(data.message);
+                setSubmitState("Success");
+                await sleep(3000);
+                setLoadingState(false);
+            }
         } catch (e) {
             console.log(e);
             setResponseMessage("Something went wrong. Please try again.");
