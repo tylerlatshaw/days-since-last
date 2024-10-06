@@ -28,13 +28,13 @@ export default function TaskContainer() {
 
         if (tasks.length < 1) {
             return <NoTasks />;
+        } else {
+            return tasks && tasks.map((task) => {
+                return <>
+                    <TaskCard UserId={UserId} TaskId={task.TaskId} DisplayName={task.DisplayName} LastDate={task.LastDate} Threshold1={task.Threshold1} Threshold2={task.Threshold2} />
+                </>;
+            });
         }
-
-        return tasks && tasks.map((task) => {
-            return <>
-                <TaskCard UserId={UserId} TaskId={task.TaskId} DisplayName={task.DisplayName} LastDate={task.LastDate} Threshold1={task.Threshold1} Threshold2={task.Threshold2} />
-            </>;
-        });
     }
 
     function loadingCard() {

@@ -1,5 +1,5 @@
 import AddTask from "@/components/add-tasks/add-task";
-import RestrictedPage from "@/components/global/restricted-page";
+import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,9 +10,13 @@ export default function Page() {
 
     return (
         <>
-            <RestrictedPage />
-            
-            <AddTask />
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
+
+            <SignedIn>
+                <AddTask />
+            </SignedIn>
         </>
     );
 }

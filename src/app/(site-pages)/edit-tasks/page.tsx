@@ -1,5 +1,5 @@
 import EditTable from "@/components/edit-tasks/edit-table";
-import RestrictedPage from "@/components/global/restricted-page";
+import { SignedOut, RedirectToSignIn, SignedIn } from "@clerk/nextjs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,9 +10,13 @@ export default function Page() {
 
     return (
         <>
-            <RestrictedPage />
+            <SignedOut>
+                <RedirectToSignIn />
+            </SignedOut>
 
-            <EditTable />
+            <SignedIn>
+                <EditTable />
+            </SignedIn>
         </>
     );
 }
