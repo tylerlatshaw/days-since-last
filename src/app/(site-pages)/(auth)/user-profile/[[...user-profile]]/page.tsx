@@ -1,6 +1,6 @@
 "use client";
 
-import { UserProfile } from "@clerk/nextjs";
+import { RedirectToSignIn, SignedIn, SignedOut, UserProfile } from "@clerk/nextjs";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 
 const CustomPage = () => {
@@ -15,11 +15,17 @@ const CustomPage = () => {
 
 const UserProfilePage = () => (
     <>
-        <UserProfile path="/user-profile" routing="path">
-            <UserProfile.Page label="Feedback" labelIcon={<InsertCommentIcon />} url="custom-page">
-                <CustomPage />
-            </UserProfile.Page>
-        </UserProfile>
+        <SignedOut>
+            <RedirectToSignIn />
+        </SignedOut>
+
+        <SignedIn>
+            <UserProfile path="/user-profile" routing="path">
+                <UserProfile.Page label="Feedback" labelIcon={<InsertCommentIcon />} url="custom-page">
+                    <CustomPage />
+                </UserProfile.Page>
+            </UserProfile>
+        </SignedIn>
     </>
 );
 

@@ -9,6 +9,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type SubmitState = "Idle" | "Success" | "Error";
 type FormInputs = {
@@ -18,6 +19,8 @@ type FormInputs = {
 };
 
 export default function AddTask() {
+
+    const router = useRouter();
 
     const [submitState, setSubmitState] = useState<SubmitState>("Idle");
     const [responseMessage, setResponseMessage] = useState<string>("");
@@ -61,10 +64,11 @@ export default function AddTask() {
                 await sleep(3000);
                 setLoadingState(false);
             } else {
-                reset();
                 setResponseMessage(data.message);
                 setSubmitState("Success");
+                reset();
                 await sleep(3000);
+                router.push("/");
                 setLoadingState(false);
             }
         } catch (e) {
