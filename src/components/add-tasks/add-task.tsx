@@ -68,7 +68,7 @@ export default function AddTask() {
                 setSubmitState("Success");
                 reset();
                 await sleep(3000);
-                router.push("/");
+                router.push("/tasks");
                 setLoadingState(false);
             }
         } catch (e) {

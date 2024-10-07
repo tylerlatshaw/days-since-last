@@ -33,6 +33,10 @@ export const footerLinks: FooterLinkType[] = [
 
 export const signedInLinks: NavigationLinkType[] = [
     {
+        display: "Tasks",
+        link: "/tasks"
+    },
+    {
         display: "Add Task",
         link: "/add-task"
     },
@@ -44,4 +48,15 @@ export const signedInLinks: NavigationLinkType[] = [
         display: "User Profile",
         link: "/user-profile"
     },
+];
+
+export const signedOutLinks: NavigationLinkType[] = [
+    {
+        display: "Sign Up",
+        link: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL!
+    },
+    {
+        display: "Sign In",
+        link: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL!
+    }
 ];
