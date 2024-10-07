@@ -130,10 +130,9 @@ export default function EditTable() {
             setLoading(true);
 
             // Refetch the tasks
-            axios.post("/api/get-tasks", {
-                "UserId": UserId
+            axios.post("/api/get-tasks", { 
+                "UserId": UserId 
             }).then((response) => {
-                console.log(response);
                 setTasks(response.data);
             }).then(() => setLoading(false));
         } catch (e) {

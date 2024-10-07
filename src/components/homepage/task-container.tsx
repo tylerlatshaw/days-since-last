@@ -19,7 +19,6 @@ export default function TaskContainer() {
         axios.post("/api/get-tasks", {
             "UserId": UserId
         }).then((response) => {
-            console.log(response);
             setTasks(response.data);
         }).then(() => setLoading(false));
     }, [UserId]);
