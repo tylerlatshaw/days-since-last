@@ -1,6 +1,6 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import "./../globals.css";
+import "./globals.css";
 import Navigation from "@/components/global/navigation";
 import Footer from "@/components/global/footer";
 import { Metadata } from "next";
