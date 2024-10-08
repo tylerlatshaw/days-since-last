@@ -1,5 +1,5 @@
 import { signedInLinks, signedOutLinks } from "@/lib/navigation-links";
-import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
