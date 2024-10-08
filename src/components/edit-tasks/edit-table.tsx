@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import NoTasks from "../homepage/no-tasks";
+import NoTasks from "../tasks/no-tasks";
 
 export default function EditTable() {
 

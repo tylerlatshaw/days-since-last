@@ -20,7 +20,7 @@ export default function TaskContainer() {
             "UserId": UserId
         }).then((response) => {
             setTasks(response.data);
-        }).then(() => setLoading(false));
+        }).finally(() => setLoading(false));
     }, [UserId]);
 
     function generateCards() {

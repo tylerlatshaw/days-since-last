@@ -12,8 +12,8 @@ type offsetType = {
 export default function TaskCard(task: TaskType) {
 
     const [currentTask, setCurrentTask] = useState<TaskType>(task);
-    const [dateTimeOffset, setDateTimeOffset] = useState<offsetType>(calculateDateOffset());
-    const [colorScheme, setColorScheme] = useState<string>(calculateColorScheme());
+    // const [dateTimeOffset, setDateTimeOffset] = useState<offsetType>(calculateDateOffset());
+    // const [colorScheme, setColorScheme] = useState<string>(calculateColorScheme());
 
     function calculateDateOffset() {
         let modifier;
@@ -59,7 +59,7 @@ export default function TaskCard(task: TaskType) {
         }
     }
 
-    function calculateColorScheme() {
+    function calculateColorScheme(dateTimeOffset: offsetType) {
 
         if (dateTimeOffset?.modifier === "Days") {
             if (dateTimeOffset?.value >= currentTask.Threshold2) {
@@ -94,13 +94,16 @@ export default function TaskCard(task: TaskType) {
                 return taskIndex.TaskId === currentTask.TaskId;
             })!;
 
-            setColorScheme(calculateColorScheme());
+            // setColorScheme(calculateColorScheme());
             setCurrentTask(updatedTask);
-            setDateTimeOffset(calculateDateOffset());
+            // setDateTimeOffset(calculateDateOffset());
         } catch (e) {
             console.log(e);
         }
     };
+
+    const dateTimeOffset = calculateDateOffset();
+    const colorScheme = calculateColorScheme(dateTimeOffset);
 
     return <div className="w-full sm:w-1/2 md:w-1/4 xl:w-1/5 p-2 text-center">
         <div className={"m-2 p-3 rounded-lg border border-gray-800 shadow-xl shadow-gray-700 " + colorScheme}>
@@ -108,8 +111,8 @@ export default function TaskCard(task: TaskType) {
 
             <div className="m-6">
                 <button className="grid place-items-center content-center w-full bg-white/40 aspect-square rounded-lg border border-black text-black hover:bg-white/60 cursor-pointer" onClick={() => { onSubmit(); }}>
-                    <span className="text-5xl sm:text-3xl lg:text-5xl mb-2">{calculateDateOffset().value}</span>
-                    <span className="text-2xl">{calculateDateOffset().modifier}</span>
+                    <span className="text-5xl sm:text-3xl lg:text-5xl mb-2">{dateTimeOffset.value}</span>
+                    <span className="text-2xl">{dateTimeOffset.modifier}</span>
                 </button>
             </div>
 

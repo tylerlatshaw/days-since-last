@@ -10,7 +10,9 @@ export type FooterLinkType = {
 
 export type NavigationLinkType = {
     display: string,
-    link: string
+    link: string,
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">>
 }
 
 export type TaskType = {
