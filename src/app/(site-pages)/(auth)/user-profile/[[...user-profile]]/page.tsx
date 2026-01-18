@@ -21,7 +21,7 @@ const UserProfilePage = () => (
 
         <SignedIn>
             <UserProfile path="/user-profile" routing="path">
-                <UserProfile.Page label="Feedback" labelIcon={<InsertCommentIcon />} url="custom-page">
+                <UserProfile.Page label="Feedback" labelIcon={<InsertCommentIcon />} url="feedback">
                     <CustomPage />
                 </UserProfile.Page>
             </UserProfile>

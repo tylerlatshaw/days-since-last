@@ -12,8 +12,6 @@ type offsetType = {
 export default function TaskCard(task: TaskType) {
 
     const [currentTask, setCurrentTask] = useState<TaskType>(task);
-    // const [dateTimeOffset, setDateTimeOffset] = useState<offsetType>(calculateDateOffset());
-    // const [colorScheme, setColorScheme] = useState<string>(calculateColorScheme());
 
     function calculateDateOffset() {
         let modifier;
@@ -84,8 +82,9 @@ export default function TaskCard(task: TaskType) {
                 Threshold2: currentTask.Threshold2
             } as TaskType);
 
-            const updatedTasks: TaskType[] = await axios.post("/api/get-tasks", {
-                "UserId": currentTask.UserId
+            const updatedTasks: TaskType[] = await axios.post("/api/get-tasks-by-id", {
+                "UserId": currentTask.UserId,
+                "TaskId": currentTask.TaskId
             }).then((response) => {
                 return response.data;
             });
@@ -94,9 +93,7 @@ export default function TaskCard(task: TaskType) {
                 return taskIndex.TaskId === currentTask.TaskId;
             })!;
 
-            // setColorScheme(calculateColorScheme());
             setCurrentTask(updatedTask);
-            // setDateTimeOffset(calculateDateOffset());
         } catch (e) {
             console.log(e);
         }

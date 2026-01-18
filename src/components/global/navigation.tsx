@@ -1,9 +1,19 @@
 import { signedInLinks, signedOutLinks } from "@/lib/navigation-links";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Navigation() {
+
+    const { userId } = auth();
+
+    function getLogoLink() {
+        if (userId)
+            return "/tasks";
+        else
+            return "/";
+    }
 
     return (
         <>
@@ -11,7 +21,7 @@ export default async function Navigation() {
                 <nav className="flex flex-row items-center w-full mx-auto text-center mt-4 px-2">
 
                     <div className="cursor-pointer">
-                        <Link href="/">
+                        <Link href={getLogoLink()}>
                             <Image src={"/static/logo-wide.svg"} width={418} height={60} alt={"Logo"} className="hover:drop-shadow-[0_0_12px_rgba(148,163,184,0.4)]" />
                         </Link>
                     </div>
